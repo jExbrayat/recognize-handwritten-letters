@@ -11,6 +11,10 @@ numpy = "^1.26.1"
 pandas = "^2.1.1"
 
 
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.0.0"
+black = "^23.10.1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
