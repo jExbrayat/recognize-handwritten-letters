@@ -1,0 +1,27 @@
+name: CI
+
+on: pull_request
+
+jobs:
+  qa-py:
+    name: Python QA
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - uses: snok/install-poetry@v1
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run Black to check formatting
+        run: poetry run black --check .
+
+      - name: Run isort
+        run: poetry run isort .
+
+      - name: Run notebooks to see if they execute without errors
+        run: find src -type f -name "*.ipynb" | xargs poetry run jupyter execute
