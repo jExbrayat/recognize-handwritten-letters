@@ -7,6 +7,7 @@ from keras.callbacks import History
 from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from keras.metrics import F1Score
 import pickle
 
 dataset = np.loadtxt("data/raw/original-dataset.csv", delimiter=",")
@@ -41,7 +42,7 @@ model.add(Dense(26, activation="softmax"))
 model.compile(
     loss="categorical_crossentropy",
     optimizer=Adam(),
-    metrics=["accuracy", "f1_score"],
+    metrics=["accuracy", F1Score()],
 )
 
 early_stopping = EarlyStopping(

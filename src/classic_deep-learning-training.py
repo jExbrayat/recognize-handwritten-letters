@@ -39,7 +39,7 @@ model.add(Dense(26, activation="softmax"))
 model.compile(
     loss="categorical_crossentropy",
     optimizer=Adam(),
-    metrics=["accuracy", "f1_score"],
+    metrics=["accuracy", F1Score],
 )
 
 early_stopping = EarlyStopping(
