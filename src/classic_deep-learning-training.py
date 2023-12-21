@@ -9,6 +9,7 @@ from keras.callbacks import History
 from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from keras.metrics import F1Score
+import pickle
 
 dataset = np.loadtxt("data/raw/original-dataset.csv", delimiter=",")
 
@@ -59,4 +60,8 @@ model.fit(
     callbacks=[early_stopping, history],
 )
 
-model.save("data/model_weights/classic/one_hidden_layer_21-12-23.h5")
+# Save model's weights and history
+save_path = "data/model_weights/classic"
+model.save(f"{save_path}/one_hidden_layer_21-12-23.h5")
+with open(f"{save_path}/one_hidden_layer_history_21-12-23.pkl", "wb") as history_file:
+    pickle.dump(history.history, history_file)
