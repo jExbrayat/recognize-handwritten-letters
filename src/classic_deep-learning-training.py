@@ -10,10 +10,10 @@ from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from keras.metrics import F1Score
 
-train_dataset = np.loadtxt("data/processed/train-dataset.csv", delimiter=",")
+dataset = np.loadtxt("data/raw/original-dataset.csv", delimiter=",")
 
-X = train_dataset[:, 1:]
-y = train_dataset[:, 0]
+X = dataset[:, 1:]
+y = dataset[:, 0]
 
 # Normalize X values between 0 and 1
 X = X.astype("float32") / 255
