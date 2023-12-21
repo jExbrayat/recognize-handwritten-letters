@@ -13,6 +13,9 @@ matplotlib = "^3.8.0"
 scikit-learn = "^1.3.2"
 seaborn = "^0.13.0"
 jupyter = "^1.0.0"
+keras = "^2.12.0"
+tensorflow = "^2.12.0"
+tensorflow-io-gcs-filesystem = "^0.31.0"
 
 
 [tool.poetry.group.dev.dependencies]
