@@ -161,6 +161,8 @@ cython_debug/
 
 # Large data files
 data/raw/original-dataset.csv
+data/processed/train-dataset.csv
+data/processed/test-dataset.csv
 
 # Settings folder for VS Code users
 .vscode/
