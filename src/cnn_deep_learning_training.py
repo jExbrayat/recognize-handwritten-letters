@@ -30,8 +30,6 @@ np.savetxt("data/processed/test-dataset.csv", test_dataset, delimiter=",")
 y = to_categorical(y)
 y_test = to_categorical(y_test)
 
-X_small, y_small = X[:100, :], y[:100, :]
-
 model = Sequential()
 model.add(Input(shape=(784,)))
 model.add(Conv2D(32, (3, 3), activation="relu"))
@@ -60,9 +58,9 @@ early_stopping = EarlyStopping(
 history = History()
 
 model.fit(
-    X_small,
-    y_small,
-    epochs=10,
+    X,
+    y,
+    epochs=750,
     validation_split=0.2,
     callbacks=[early_stopping, history],
 )
