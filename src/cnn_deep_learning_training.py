@@ -1,14 +1,11 @@
-import matplotlib.pyplot as plt
 import numpy as np
 from keras.layers import Dense, Input
 from keras.models import Sequential
 from keras.utils import to_categorical
-from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 from keras.callbacks import EarlyStopping
 from keras.callbacks import History
 from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
-from keras.metrics import F1Score
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 import pickle
 
