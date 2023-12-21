@@ -163,4 +163,4 @@ cython_debug/
 data/raw/original-dataset.csv
 
 # Settings folder for VS Code users
-.vscode 
+.vscode/
