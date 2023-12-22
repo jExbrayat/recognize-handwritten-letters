@@ -30,6 +30,7 @@ pandas-vet = "^2023.8.2"
 flake8-bugbear = "^23.12.2"
 sphinx = "^7.2.6"
 sphinx-rtd-theme = "^2.0.0"
+nbdev = "^2.3.13"
 
 [build-system]
 requires = ["poetry-core"]
