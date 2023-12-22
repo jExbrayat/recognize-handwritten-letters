@@ -22,6 +22,8 @@ black = {extras = ["jupyter"], version = "^23.10.1"}
 isort = "^5.12.0"
 nbqa = "^1.7.1"
 poethepoet = "^0.24.4"
+papermill = "^2.5.0"
+
 
 [build-system]
 requires = ["poetry-core"]
@@ -61,7 +63,7 @@ build-backend = "poetry.core.masonry.api"
     RED='\\033[0;31m'
     NC='\\033[0m' # No Color
 
-    for input_file in $(find src docs/source -type f -name "*.ipynb"); do
+    for input_file in $(find src -type f -name "*.ipynb"); do
       echo "${RED}Notebook: ${input_file}${NC}"
       papermill "$input_file" temp.ipynb
     done
