@@ -23,7 +23,7 @@ jobs:
       - name: Run isort
         run: poetry run isort --check .
 
-      - name: Run nbaq isort
+      - name: Run nbqa isort
         run: poetry run nbqa isort --check .
 
       - name: Run notebooks to see if they execute without errors
