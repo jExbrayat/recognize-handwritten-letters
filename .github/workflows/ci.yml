@@ -27,4 +27,4 @@ jobs:
         run: poetry run nbqa isort --check .
 
       - name: Run notebooks to see if they execute without errors
-        run: find src -type f -name "*.ipynb" | xargs poetry run jupyter execute
+        run: poetry run poe nbrun
