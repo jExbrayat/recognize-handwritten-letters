@@ -21,6 +21,7 @@ tensorflow-io-gcs-filesystem = "^0.31.0"
 black = {extras = ["jupyter"], version = "^23.10.1"}
 isort = "^5.12.0"
 nbqa = "^1.7.1"
+poethepoet = "^0.24.4"
 
 [build-system]
 requires = ["poetry-core"]
