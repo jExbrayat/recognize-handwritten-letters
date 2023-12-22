@@ -21,7 +21,7 @@ jobs:
         run: poetry run black --check .
 
       - name: Run isort
-        run: poetry run isort .
+        run: poetry run isort --check .
 
       - name: Run notebooks to see if they execute without errors
         run: find src -type f -name "*.ipynb" | xargs poetry run jupyter execute
