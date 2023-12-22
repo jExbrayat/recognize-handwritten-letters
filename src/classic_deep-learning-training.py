@@ -1,9 +1,7 @@
-import matplotlib.pyplot as plt
 import numpy as np
 from keras.layers import Dense, Input
 from keras.models import Sequential
 from keras.utils import to_categorical
-from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 from keras.callbacks import EarlyStopping
 from keras.callbacks import History
 from keras.optimizers import Adam
