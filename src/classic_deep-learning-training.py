@@ -61,3 +61,9 @@ save_path = "data/model_weights/classic"
 model.save(f"{save_path}/one_hidden_layer_21-12-23.h5")
 with open(f"{save_path}/one_hidden_layer_history_21-12-23.pkl", "wb") as history_file:
     pickle.dump(history.history, history_file)
+
+# Get model's loss and accuracy
+model_eval = model.evaluate(X, y)
+
+with open(f"{save_path}/one_hidden_layer_evaluate_21-12-23.pkl", "wb") as eval_file:
+    pickle.dump(model_eval, eval_file)
