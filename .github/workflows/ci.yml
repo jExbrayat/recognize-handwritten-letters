@@ -26,5 +26,13 @@ jobs:
       - name: Run nbqa isort
         run: poetry run nbqa isort --check .
 
+      - name: Run flake8
+        run: |
+          poetry run flake8 .
+          poetry run nbqa flake8 .
+
+      - name: Run nb-clean to check for unnecessary metadata and empty cells in notebooks
+        run: poetry run nb-clean check . --preserve-cell-outputs --remove-empty-cells
+
       - name: Run notebooks to see if they execute without errors
         run: poetry run poe nbrun
