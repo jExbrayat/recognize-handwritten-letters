@@ -1,3 +1,3 @@
 # Store model weights
 
-Contains files with .h5 format.
+Contain model's training curves, confusion matrix, weights, keras.evaluate result, and scores history.
