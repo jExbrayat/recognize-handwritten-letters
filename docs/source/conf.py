@@ -5,6 +5,8 @@
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+import sys
+from pathlib import Path
 
 project = "recognize-handwritten-letters"
 copyright = "2023, Exbrayat Madani"
@@ -13,10 +15,8 @@ author = "Exbrayat Madani"
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-import sys
-from pathlib import Path
 
-## Add root folder to path
+# Add root folder to path
 filepath = Path(__file__).resolve()
 root_folder = str(filepath.parent.parent.parent)
 sys.path.append(root_folder)
