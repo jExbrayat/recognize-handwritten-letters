@@ -7,6 +7,7 @@ def plot_training_curve(
     validation_loss: list,
     plot_from_n_epoch: int,
     validation_accuracy: list = None,
+    save_path: str = None,
 ):
     """Plot training curves of a keras model (train loss, val loss, val accuracy if classification model)
 
@@ -15,6 +16,7 @@ def plot_training_curve(
         validation_loss (list): validation loss gathered from history callback
         validation_accuracy (list): validation accuracy gathered from history callback
         plot_from_n_epoch (int): epoch from which to plot when there are too many
+        save_path (str): path to save plot in .png format
     """
 
     num_epochs_to_display = len(training_loss) - plot_from_n_epoch
@@ -39,5 +41,8 @@ def plot_training_curve(
             step=step_x_ticks,
         ),
     )
+
+    if save_path is not None:
+        plt.savefig(save_path)
 
     plt.show()
