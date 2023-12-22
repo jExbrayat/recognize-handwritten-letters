@@ -21,6 +21,7 @@ filepath = Path(__file__).resolve()
 root_folder = str(filepath.parent.parent.parent)
 sys.path.append(root_folder)
 sys.path.append(f"{root_folder}/src")
+sys.path.append(f"{root_folder}/src/functions")
 
 
 extensions = ["sphinx.ext.autodoc", "sphinx.ext.viewcode", "sphinx.ext.napoleon"]
