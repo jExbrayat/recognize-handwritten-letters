@@ -26,3 +26,17 @@ poethepoet = "^0.24.4"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks.nbrun]
+help = "Run notebooks to see if they work"
+shell = """
+RED='\\033[0;31m'
+NC='\\033[0m' # No Color
+
+for input_file in $(find src docs/source -type f -name "*.ipynb"); do
+    echo "${RED}Notebook: ${input_file}${NC}"
+    papermill "$input_file" temp.ipynb
+done
+
+rm temp.ipynb
+"""
