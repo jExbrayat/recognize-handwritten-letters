@@ -1,14 +1,13 @@
-import numpy as np
-from keras.layers import Dense, Input
-from keras.models import Sequential
-from keras.utils import to_categorical
-from keras.callbacks import EarlyStopping
-from keras.callbacks import History
-from keras.optimizers import Adam
-from sklearn.model_selection import train_test_split
-from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
-from keras.metrics import F1Score
 import pickle
+
+import numpy as np
+from keras.callbacks import EarlyStopping, History
+from keras.layers import Conv2D, Dense, Flatten, Input, MaxPooling2D
+from keras.metrics import F1Score
+from keras.models import Sequential
+from keras.optimizers import Adam
+from keras.utils import to_categorical
+from sklearn.model_selection import train_test_split
 
 dataset = np.loadtxt("data/raw/original-dataset.csv", delimiter=",")
 
