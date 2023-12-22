@@ -63,8 +63,16 @@ model.fit(
     callbacks=[early_stopping, history],
 )
 
-# Save model's weights and history
+# Get model's loss and accuracy
+model_eval = model.evaluate(X, y)
+
+# Save model's results
 save_path = "data/model_weights/cnn"
+
 model.save(f"{save_path}/cnn_experiment_21-12-23.h5")
+
 with open(f"{save_path}/cnn_experiment_history_21-12-23.pkl", "wb") as history_file:
     pickle.dump(history.history, history_file)
+
+with open(f"{save_path}/cnn_experiment_evaluate.pkl", "wb") as eval_file:
+    pickle.dump(model_eval, eval_file)
