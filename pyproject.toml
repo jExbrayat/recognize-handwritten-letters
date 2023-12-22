@@ -17,10 +17,10 @@ keras = "^2.12.0"
 tensorflow = "^2.12.0"
 tensorflow-io-gcs-filesystem = "^0.31.0"
 
-
 [tool.poetry.group.dev.dependencies]
 black = {extras = ["jupyter"], version = "^23.10.1"}
 isort = "^5.12.0"
+nbqa = "^1.7.1"
 
 [build-system]
 requires = ["poetry-core"]
