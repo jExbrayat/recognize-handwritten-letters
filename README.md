@@ -12,6 +12,11 @@ We are working on a [MNIST-like dataset for letters](https://www.kaggle.com/data
 
 ## Gallery
 
+### Embedding of the letters with UMAP
+
+![UMAP embedding of the letters](assets/img/umap-embedding-plot.png)
+
+Here we reduced the dimension of the dataset from 784 dimensions to 2, with the UMAP algorithm.
 
 ### Learning curves & correlation matrix with a CNN network
 <p>
