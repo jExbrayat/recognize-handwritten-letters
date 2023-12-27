@@ -9,7 +9,7 @@ The goal of this project is to recognize handwritten letters.
 We are working on a [MNIST-like dataset for letters](https://www.kaggle.com/datasets/ashishguptajiit/handwritten-az/data).
 
 
-<div style="display: flex; align-items: center;">
+<p>
   <img src="assets/img/cnn-training-curve.png" width="49%" />
   <img src="assets/img/cnn-confusion-matrix.png" width="49%" /> 
-</div>
+</p>
