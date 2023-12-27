@@ -2,9 +2,9 @@
 
 The goal of this project is to recognize handwritten letters.
 
-<div style="display: flex; justify-content: center;">
+<p align="middle">
   <img src="assets/img/dataset-first-letters.png" />
-</div>
+</p>
 
 We are working on a [MNIST-like dataset for letters](https://www.kaggle.com/datasets/ashishguptajiit/handwritten-az/data).
 
