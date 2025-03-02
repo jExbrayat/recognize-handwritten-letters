@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grille Dessin React</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+    <div id="root"></div>
+
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const Grid = ({ size }) => {
+            const [cells, setCells] = useState(() => Array(size * size).fill(false));
+            const [isDrawing, setIsDrawing] = useState(false);
+            const [mode, setMode] = useState("write"); // Modes: "write" or "erase"
+
+            const toggleCell = (index) => {
+                setCells((prev) => {
+                    const newCells = [...prev];
+                    if (mode === "write") {
+                        newCells[index] = true;
+                    } else if (mode === "erase") {
+                        newCells[index] = false;
+                    }
+                    return newCells;
+                });
+            };
+
+            const clearGrid = () => {
+                setCells(Array(size * size).fill(false));
+            };
+
+            const handleMouseDown = (index) => {
+                setIsDrawing(true);
+                toggleCell(index);
+            };
+
+            const handleMouseUp = () => {
+                setIsDrawing(false);
+            };
+
+            const handleMouseEnter = (index) => {
+                if (isDrawing) toggleCell(index);
+            };
+
+            return (
+                <div className="flex flex-col items-center">
+                    <div className="mb-4 flex gap-2">
+                        <button
+                            className={`px-4 py-2 rounded ${mode === "write" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+                            onClick={() => setMode("write")}
+                        >
+                            Écrire
+                        </button>
+                        <button
+                            className={`px-4 py-2 rounded ${mode === "erase" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+                            onClick={() => setMode("erase")}
+                        >
+                            Gomme
+                        </button>
+                        <button
+                            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
+                            onClick={clearGrid}
+                        >
+                            Tout Effacer
+                        </button>
+                    </div>
+                    <div
+                        className="grid border border-black"
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: `repeat(${size}, 1fr)`,
+                            gridTemplateRows: `repeat(${size}, 1fr)`,
+                            width: "560px",
+                            height: "560px",
+                        }}
+                        onMouseUp={handleMouseUp}
+                    >
+                        {cells.map((filled, index) => (
+                            <div
+                                key={index}
+                                className="border border-gray-300"
+                                style={{
+                                    backgroundColor: filled ? "black" : "white",
+                                    width: "20px",
+                                    height: "20px",
+                                }}
+                                onMouseDown={() => handleMouseDown(index)}
+                                onMouseEnter={() => handleMouseEnter(index)}
+                            />
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            return (
+                <div className="flex justify-center items-center h-screen">
+                    <Grid size={28} />
+                </div>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+</body>
+</html>
