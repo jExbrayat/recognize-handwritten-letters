@@ -22,11 +22,11 @@ function clamp(number, min, max) {
 }
 
 const Grid = ({ size }) => {
-  const [cells, setCells] = useState(() => Array(size * size).fill(0));
+  const [cells, setCells] = useState(() => Array(size * size).fill(255));
   const [isDrawing, setIsDrawing] = useState(false);
   const [mode, setMode] = useState("write"); // Modes: "write" or "erase"
-  const [penSize, setPenSize] = useState(1); // Size of the pen
-  const [shade, setShade] = useState(255); // Shade intensity from 0 (black) to 255 (white)
+  const [penSize, setPenSize] = useState(3); // Size of the pen
+  const [shade, setShade] = useState(100); // Shade intensity from 0 (black) to 255 (white)
 
   const toggleCell = (index) => {
     setCells((prev) => {
