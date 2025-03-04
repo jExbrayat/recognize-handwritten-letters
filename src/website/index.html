@@ -13,6 +13,8 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tensorflow/4.22.0/tf.min.js"></script>
+    <script src=" https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js "></script>
 
     <script type="text/babel">
 const { useState } = React;
@@ -27,6 +29,7 @@ const Grid = ({ size }) => {
   const [mode, setMode] = useState("write"); // Modes: "write" or "erase"
   const [penSize, setPenSize] = useState(3); // Size of the pen
   const [shade, setShade] = useState(100); // Shade intensity from 0 (black) to 255 (white)
+  const [digit, setDigit] = useState(0); 
 
   const toggleCell = (index) => {
     setCells((prev) => {
@@ -45,7 +48,6 @@ const Grid = ({ size }) => {
           const newCol = col + j;
           const newIndex = newRow * size + newCol;
           const gray_borders = 20 * (i **2 + j**2); // Adds grayer borders to the pen strokes
-          console.log(newCells[newIndex]);
           const new_value = clamp(shade + gray_borders, 0, 255);
 
           if (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size) {
@@ -66,8 +68,15 @@ const Grid = ({ size }) => {
     toggleCell(index);
   };
 
-  const handleMouseUp = () => {
+  const handleMouseUp = async () => {
     setIsDrawing(false);
+    
+    console.log('Mouse up detected, running inference...');
+    
+    const cellsProcessed = cells.map(element => (-element + 255) / 255);
+    let digit_predicted = Number((await runInference(model_url, [cellsProcessed]))[0]);
+    console.log("digit_predicted", digit_predicted);
+    setDigit(digit_predicted);
   };
 
   const handleMouseEnter = (index) => {
@@ -75,7 +84,8 @@ const Grid = ({ size }) => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div>
+      <div className="flex flex-col items-center">
       <div className="mb-4 flex gap-2">
         <button
           className={`px-4 py-2 rounded ${mode === "write" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
@@ -144,6 +154,8 @@ const Grid = ({ size }) => {
         ))}
       </div>
     </div>
+    <p>Le chiffre reconnu est un {digit}.</p>
+    </div>
   );
 };
 
@@ -157,5 +169,38 @@ const Grid = ({ size }) => {
 
         ReactDOM.createRoot(document.getElementById("root")).render(<App />);
     </script>
+    <script>
+async function runInference(modelPath, inputData) {
+    try {
+        // Charger le modèle ONNX
+        const session = await ort.InferenceSession.create(modelPath);
+        
+        // Créer un tenseur à partir des données d'entrée
+        const inputTensor = new ort.Tensor('float32', new Float32Array(inputData.flat()), [inputData.length, inputData[0].length]);
+
+        
+        // Effectuer l'inférence
+        const feeds = { float_input: inputTensor };
+
+        // const results = await session.run(feeds);
+        const results = await session.run(feeds, ["output_label"]);
+        
+        // Récupérer les sorties (nom de la sortie peut varier selon le modèle)
+        const outputName = session.outputNames[0];
+        const outputData = results[outputName].data;
+        
+        console.log("'Résultat de l'inférence:'", outputData);
+        return outputData;
+    } catch (error) {
+        console.error("'Erreur lors de l'inférence:'", error);
+    }
+}
+
+// Exemple d'utilisation
+const testInput = [[0.5, 0.2, 0.1, ...Array(784 - 3).fill(0)]]; // Une image normalisée de 28x28 aplatie
+const model_url = 'https://raw.githubusercontent.com/jExbrayat/recognize-handwritten-letters/feat(website)/create-interactive-website/src/website/random_forest_mnist_light.onnx';
+runInference(model_url, testInput);
+
+</script>
 </body>
 </html>
