@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grille Dessin React</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .not-draggable { /* otherwise the grid drawing can be "ghost-draggable", see 
+        https://www.reddit.com/r/webdev/comments/pesm19/how_do_i_disable_this_ghost_image_when_i_click/*/
+            user-drag: none; 
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 flex justify-center items-center h-screen">
     <div id="root"></div>
@@ -162,7 +173,7 @@ const Grid = ({ size, cellSize }) => {
         const App = () => {
             return (
                 <div className="flex justify-center items-center h-screen">
-                    <Grid size={28} cellSize={20} />
+                    <Grid size={28} cellSize={20} className="not-draggable" />
                 </div>
             );
         };
