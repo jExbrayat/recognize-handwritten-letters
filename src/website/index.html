@@ -48,7 +48,7 @@ const Grid = ({ size }) => {
           const newCol = col + j;
           const newIndex = newRow * size + newCol;
           const gray_borders = 20 * (i **2 + j**2); // Adds grayer borders to the pen strokes
-          const new_value = clamp(shade + gray_borders, 0, 255);
+          const new_value = clamp(shade - gray_borders, 0, 255);
 
           if (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size) {
             newCells[newIndex] = mode === "write" ? newCells[newIndex] - new_value : 255;
