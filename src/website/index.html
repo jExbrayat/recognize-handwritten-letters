@@ -74,12 +74,12 @@ const Grid = ({ size, cellSize }) => {
     setCells(Array(size * size).fill(255));
   };
 
-  const handleMouseDown = (index) => {
+  const handleStart = (index) => {
     setIsDrawing(true);
     toggleCell(index);
   };
 
-  const handleMouseUp = async () => {
+  const handleEnd = async () => {
     setIsDrawing(false);
     
     console.log('Mouse up detected, running inference...');
@@ -90,7 +90,7 @@ const Grid = ({ size, cellSize }) => {
     setDigit(digit_predicted);
   };
 
-  const handleMouseEnter = (index) => {
+  const handleMove = (index) => {
     if (isDrawing) toggleCell(index);
   };
 
@@ -148,7 +148,8 @@ const Grid = ({ size, cellSize }) => {
           width: `${size * cellSize}px`,
           height: `${size * cellSize}px`,
         }}
-        onMouseUp={handleMouseUp}
+        onMouseUp={handleEnd}
+        onTouchEnd={handleEnd}
       >
         {cells.map((grayValue, index) => (
           <div
@@ -159,8 +160,18 @@ const Grid = ({ size, cellSize }) => {
               width: `${cellSize}px`,
               height: `${cellSize}px`,
             }}
-            onMouseDown={() => handleMouseDown(index)}
-            onMouseEnter={() => handleMouseEnter(index)}
+            onMouseDown={() => handleStart(index)}
+            onMouseEnter={() => handleMove(index)}
+            onTouchStart={() => handleStart(index)}
+            onTouchMove={(e) => {
+              e.preventDefault();
+              const touch = e.touches[0];
+              const target = document.elementFromPoint(touch.clientX, touch.clientY);
+              if (target && target.dataset.index) {
+                handleMove(parseInt(target.dataset.index));
+              }
+            }}
+            data-index={index}
           />
         ))}
       </div>
