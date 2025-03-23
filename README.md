@@ -29,6 +29,6 @@ Our CNN achieved more than 98% of accuracy on the test set.
 
 ### Embedding of the letters with UMAP
 
-Here we reduced the dimension of the dataset from 784 dimensions to 2, with the UMAP algorithm.
+Here we reduced the dimension of the dataset from 784 dimensions to 2, with the UMAP algorithm. Test
 
 ![UMAP embedding of the letters](assets/img/umap-embedding-plot.png)
