@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grille Dessin React</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .not-draggable { /* otherwise the grid drawing can be "ghost-draggable", see 
+        https://www.reddit.com/r/webdev/comments/pesm19/how_do_i_disable_this_ghost_image_when_i_click/*/
+            user-drag: none; 
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+    <div id="root"></div>
+
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tensorflow/4.22.0/tf.min.js"></script>
+    <script src=" https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js "></script>
+
+    <script type="text/babel">
+const { useState } = React;
+
+function clamp(number, min, max) {
+  return Math.max(min, Math.min(number, max));
+}
+
+const Grid = ({ size, cellSize }) => {
+  const [cells, setCells] = useState(() => Array(size * size).fill(255));
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [mode, setMode] = useState("write"); // Modes: "write" or "erase"
+  const [penSize, setPenSize] = useState(3); // Size of the pen
+  const [shade, setShade] = useState(100); // Shade intensity from 0 (black) to 255 (white)
+  const [digit, setDigit] = useState(0); 
+
+  const toggleCell = (index) => {
+    setCells((prev) => {
+      const newCells = [...prev];
+      const row = Math.floor(index / size);
+      const col = index % size;
+
+      const startX =  -Math.floor(penSize / 2);
+      const endX =  Math.floor(penSize / 2);
+      const startY =  startX;
+      const endY =  endX;
+      
+      for (let i = startX; i <= endX; i++) {
+        for (let j = startY; j <= endY; j++) {
+          const newRow = row + i;
+          const newCol = col + j;
+          const newIndex = newRow * size + newCol;
+          const gray_borders = 20 * (i **2 + j**2); // Adds grayer borders to the pen strokes
+          const new_value = clamp(shade - gray_borders, 0, 255);
+
+          if (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size) {
+            newCells[newIndex] = mode === "write" ? newCells[newIndex] - new_value : 255;
+          }
+        }
+      }
+      return newCells;
+    });
+  };
+
+  const clearGrid = () => {
+    setCells(Array(size * size).fill(255));
+  };
+
+  const handleStart = (index) => {
+    setIsDrawing(true);
+    toggleCell(index);
+  };
+
+  const handleEnd = async () => {
+    setIsDrawing(false);
+    
+    console.log('Mouse up detected, running inference...');
+    
+    const cellsProcessed = cells.map(element => (-element + 255) / 255);
+    let digit_predicted = Number((await runInference(model_url, [cellsProcessed]))[0]);
+    console.log("digit_predicted", digit_predicted);
+    setDigit(digit_predicted);
+  };
+
+  const handleMove = (index) => {
+    if (isDrawing) toggleCell(index);
+  };
+
+  return (
+    <div>
+      <div className="flex flex-col items-center">
+      <div className="mb-4 flex gap-2">
+        <button
+          className={`px-4 py-2 rounded ${mode === "write" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+          onClick={() => setMode("write")}
+        >
+          Écrire
+        </button>
+        <button
+          className={`px-4 py-2 rounded ${mode === "erase" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+          onClick={() => setMode("erase")}
+        >
+          Gomme
+        </button>
+        <button
+          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
+          onClick={clearGrid}
+        >
+          Tout Effacer
+        </button>
+      </div>
+      <div className="mb-4">
+        <label className="mr-2">Taille du stylo:</label>
+        <input
+          type="range"
+          min="1"
+          max="5"
+          value={penSize}
+          onChange={(e) => setPenSize(parseInt(e.target.value))}
+          className="cursor-pointer"
+        />
+      </div>
+      <div className="mb-4">
+        <label className="mr-2">Nuance de gris:</label>
+        <input
+          type="range"
+          min="0"
+          max="255"
+          value={shade}
+          onChange={(e) => setShade(parseInt(e.target.value))}
+          className="cursor-pointer"
+        />
+      </div>
+      <div
+        className="grid border border-black"
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${size}, 1fr)`,
+          gridTemplateRows: `repeat(${size}, 1fr)`,
+          width: `${size * cellSize}px`,
+          height: `${size * cellSize}px`,
+        }}
+        onMouseUp={handleEnd}
+        onTouchEnd={handleEnd}
+      >
+        {cells.map((grayValue, index) => (
+          <div
+            key={index}
+            className=""
+            style={{
+              backgroundColor: `rgb(${grayValue}, ${grayValue}, ${grayValue})`,
+              width: `${cellSize}px`,
+              height: `${cellSize}px`,
+            }}
+            onMouseDown={() => handleStart(index)}
+            onMouseEnter={() => handleMove(index)}
+            onTouchStart={() => handleStart(index)}
+            onTouchMove={(e) => {
+              e.preventDefault();
+              const touch = e.touches[0];
+              const target = document.elementFromPoint(touch.clientX, touch.clientY);
+              if (target && target.dataset.index) {
+                handleMove(parseInt(target.dataset.index));
+              }
+            }}
+            data-index={index}
+          />
+        ))}
+      </div>
+    </div>
+    <p>Le chiffre reconnu est un {digit}.</p>
+    </div>
+  );
+};
+
+        const App = () => {
+            return (
+                <div className="flex justify-center items-center h-screen not-draggable">
+                    <Grid size={28} cellSize={20} />
+                </div>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+    <script>
+async function runInference(modelPath, inputData) {
+    try {
+        // Charger le modèle ONNX
+        const session = await ort.InferenceSession.create(modelPath);
+        
+        // Créer un tenseur à partir des données d'entrée
+        const inputTensor = new ort.Tensor('float32', new Float32Array(inputData.flat()), [inputData.length, inputData[0].length]);
+
+        
+        // Effectuer l'inférence
+        const feeds = { float_input: inputTensor };
+
+        // const results = await session.run(feeds);
+        const results = await session.run(feeds, ["output_label"]);
+        
+        // Récupérer les sorties (nom de la sortie peut varier selon le modèle)
+        const outputName = session.outputNames[0];
+        const outputData = results[outputName].data;
+        
+        console.log("'Résultat de l'inférence:'", outputData);
+        return outputData;
+    } catch (error) {
+        console.error("'Erreur lors de l'inférence:'", error);
+    }
+}
+
+// Exemple d'utilisation
+const testInput = [[0.5, 0.2, 0.1, ...Array(784 - 3).fill(0)]]; // Une image normalisée de 28x28 aplatie
+const model_url = 'https://raw.githubusercontent.com/jExbrayat/recognize-handwritten-letters/feat(website)/create-interactive-website/src/website/random_forest_mnist_light.onnx';
+runInference(model_url, testInput);
+
+</script>
+</body>
+</html>
