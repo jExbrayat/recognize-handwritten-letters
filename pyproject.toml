@@ -10,6 +10,7 @@ dependencies = [
     "notebook>=7.3.3",
     "numpy>=2.2.4",
     "pandas>=2.2.3",
+    "pyarrow>=19.0.1",
     "scikit-learn>=1.6.1",
     "seaborn>=0.13.2",
 ]
