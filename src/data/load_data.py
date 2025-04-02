@@ -10,7 +10,7 @@ def load_sample_data() -> pd.DataFrame:
 
     >>> df = load_sample_data()
     """
-    df = pd.read_parquet(f"{data_folder}/raw/sample-uniform.parquet", engine="pyarrow")
+    df = pd.read_parquet(f"{data_folder}/raw/sample-uniform-distribution.parquet", engine="pyarrow")
     return df
 
 
