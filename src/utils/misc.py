@@ -8,12 +8,12 @@ import seaborn as sns
 
 
 def get_project_root() -> Path:
-    """
-    Returns the project root, useful for getting absolute paths in other files.
+    """Return the project root, useful for getting absolute paths in other files.
 
     Returns
     -------
     The project root.
+
     """
     current_file = Path(__file__).resolve()
     project_root = current_file.parent.parent.parent
@@ -21,12 +21,12 @@ def get_project_root() -> Path:
 
 
 def go_to_root_folder() -> None:
-    """
-    Goes to the root folder, useful for accessing data folder simply in notebooks.
+    """Go to the root folder, useful for accessing data folder simply in notebooks.
 
     Returns
     -------
     None
+
     """
     os.chdir(get_project_root())
 
@@ -36,7 +36,7 @@ def set_seed(seed: int = 0) -> None:
 
 
 def set_plot_options() -> None:
-    """Sets default plotting options."""
+    """Set default plotting options."""
     sns.set_theme()
 
 
