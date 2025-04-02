@@ -19,3 +19,32 @@ dependencies = [
 dev = [
     "ruff>=0.11.2",
 ]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "UP",
+    "B",
+    "SIM",
+    "I",
+    "D",
+    "RUF",
+    "FURB",
+    "W",
+    "PERF",
+    "N",
+    "PD",
+    "NPY",
+    "FLY",
+    "PTH",
+    "ARG",
+    "TC",
+    "SLOT",
+    "SIM",
+    "SLF",
+    "Q",
+    "PT",
+    "PYI",
+    "ANN"
+]
