@@ -10,10 +10,12 @@ dependencies = [
     "matplotlib>=3.10.1",
     "notebook>=7.3.3",
     "numpy>=2.2.4",
+    "onnx>=1.17.0",
     "pandas>=2.2.3",
     "pyarrow>=19.0.1",
     "scikit-learn>=1.6.1",
     "seaborn>=0.13.2",
+    "skl2onnx>=1.18.0",
     "torch>=2.6.0",
 ]
 
