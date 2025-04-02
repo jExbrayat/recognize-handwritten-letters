@@ -1,5 +1,0 @@
-[flake8]
-max-line-length = 100
-; original restriction may conflicts with black
-extend-ignore = PD005
-; prevent weird behavior with keras commands
