@@ -54,7 +54,7 @@ model.fit(
 )
 
 # Save model's weights and history
-save_path = "data/model_results/classic"
+save_path = "data/results/classic"
 model.save(f"{save_path}/one_hidden_layer_22-12-23.h5")
 with open(f"{save_path}/one_hidden_layer_history_22-12-23.pkl", "wb") as history_file:
     pickle.dump(history.history, history_file)
