@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "jupyter>=1.1.1",
+    "keras>=3.9.1",
     "matplotlib>=3.10.1",
     "notebook>=7.3.3",
     "numpy>=2.2.4",
@@ -13,6 +14,7 @@ dependencies = [
     "pyarrow>=19.0.1",
     "scikit-learn>=1.6.1",
     "seaborn>=0.13.2",
+    "torch>=2.6.0",
 ]
 
 [dependency-groups]
@@ -49,4 +51,17 @@ select = [
     "PT",
     "PYI",
     "ANN"
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cpu" },
+]
+torchvision = [
+  { index = "pytorch-cpu" },
 ]
