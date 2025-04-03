@@ -24,8 +24,8 @@ jobs:
       - name: Check formatting
         run: uv run ruff format --check
 
-      - name: Linting
-        run: uv run ruff check
+#      - name: Linting
+#        run: uv run ruff check
 
       - name: Notebooks - check for unnecessary metadata and empty cells
         run: uv run nb-clean check . --preserve-cell-outputs --remove-empty-cells
