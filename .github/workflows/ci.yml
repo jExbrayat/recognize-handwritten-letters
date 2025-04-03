@@ -29,3 +29,6 @@ jobs:
 
       - name: Notebooks - check for unnecessary metadata and empty cells
         run: uv run nb-clean check . --preserve-cell-outputs --remove-empty-cells
+
+      - name: Unit tests
+        run: uv run pytest --doctest-modules
