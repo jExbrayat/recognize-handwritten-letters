@@ -55,6 +55,9 @@ select = [
     "ANN"
 ]
 
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
 [[tool.uv.index]]
 name = "pytorch-cpu"
 url = "https://download.pytorch.org/whl/cpu"
