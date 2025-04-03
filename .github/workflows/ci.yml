@@ -8,31 +8,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
-      - uses: snok/install-poetry@v1
+          python-version-file: ".python-version"
 
-      - name: Install dependencies
-        run: poetry install
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
-      - name: Run Black to check formatting
-        run: poetry run black --check .
+      - name: Install the project
+        run: uv sync --all-extras --dev
 
-      - name: Run isort
-        run: poetry run isort --check .
+      - name: Check formatting
+        run: uv run ruff format --check
 
-      - name: Run nbqa isort
-        run: poetry run nbqa isort --check .
+      - name: Linting
+        run: uv run ruff check
 
-      - name: Run flake8
-        run: |
-          poetry run flake8 .
-          poetry run nbqa flake8 .
-
-      - name: Run nb-clean to check for unnecessary metadata and empty cells in notebooks
-        run: poetry run nb-clean check . --preserve-cell-outputs --remove-empty-cells
-
-      - name: Run notebooks to see if they execute without errors
-        run: poetry run poe nbrun
+      - name: Notebooks - check for unnecessary metadata and empty cells
+        run: uv run nb-clean check . --preserve-cell-outputs --remove-empty-cells
