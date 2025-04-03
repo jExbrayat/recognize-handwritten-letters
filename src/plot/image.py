@@ -9,10 +9,12 @@ def plot_one_letter(df: pd.DataFrame | np.ndarray, index: int) -> None:
     plt.figure(figsize=(1, 1))
     plt.axis("off")
 
+    img: np.ndarray
     if isinstance(df, pd.DataFrame):
-        img: np.ndarray = df.iloc[index].to_numpy().reshape(img_shape)
+        img = df.iloc[index].to_numpy().reshape(img_shape)
     else:
-        img: np.ndarray = df[index].reshape(img_shape)
+        img = df[index].reshape(img_shape)
+
     plt.imshow(img, cmap=plt.cm.binary)
     plt.show()
 
@@ -27,10 +29,11 @@ def plot_grid_of_letters(
     fig, axs = plt.subplots(nrows=nb_rows, ncols=nb_cols, figsize=figsize)
 
     for index, ax in enumerate(axs.ravel()):
+        img: np.ndarray
         if isinstance(df, pd.DataFrame):
-            img: np.ndarray = df.iloc[index].to_numpy().reshape(img_shape)
+            img = df.iloc[index].to_numpy().reshape(img_shape)
         else:
-            img: np.ndarray = df[index].reshape(img_shape)
+            img = df[index].reshape(img_shape)
         ax.imshow(img, cmap=plt.cm.binary)
 
         ax.axis("off")
