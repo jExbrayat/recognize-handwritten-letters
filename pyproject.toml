@@ -23,6 +23,7 @@ dependencies = [
 dev = [
     "nb-clean>=4.0.1",
     "nbdev>=2.3.37",
+    "pytest>=8.3.5",
     "ruff>=0.11.2",
 ]
 
@@ -54,6 +55,9 @@ select = [
     "PYI",
     "ANN"
 ]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
 
 [[tool.uv.index]]
 name = "pytorch-cpu"
