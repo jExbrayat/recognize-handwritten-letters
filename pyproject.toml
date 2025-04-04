@@ -78,15 +78,22 @@ select = [
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
 
-[[tool.uv.index]]
-name = "pytorch-cpu"
-url = "https://download.pytorch.org/whl/cpu"
-explicit = true
+[tool.poe]
+    [tool.poe.tasks.format]
+    help = "Format the files"
+    sequence = [
+        {cmd = "uv run ruff format"},
+    ]
 
-[tool.uv.sources]
-torch = [
-  { index = "pytorch-cpu" },
-]
-torchvision = [
-  { index = "pytorch-cpu" },
-]
+    [tool.poe.tasks.lint]
+    help = "Lint the files"
+    sequence = [
+        {cmd = "uv run ruff check --fix"},
+    ]
+
+    [tool.poe.tasks.check]
+    help = "Check formatting & linting"
+    sequence = [
+        {cmd = "uv run ruff format --check"},
+        {cmd = "uv run ruff check"},
+    ]
