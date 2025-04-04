@@ -32,21 +32,6 @@ build-backend = "poetry.core.masonry.api"
 profile = "black"
 
 [tool.poe]
-  [tool.poe.tasks.format]
-  help = "Format the files"
-  sequence = [
-    { cmd = "black ." },
-    { cmd = "isort ." },
-    { cmd = "nbqa isort . --float-to-top" },
-  ]
-
-  [tool.poe.tasks.lint]
-  help = "Lint the files"
-  sequence = [
-    { cmd = "flake8 ." },
-    { cmd = "nbqa flake8 ." },
-  ]
-
   [tool.poe.tasks.nbcheck]
   help = "Check notebooks for metadata"
   cmd = "nb-clean check . --preserve-cell-outputs --remove-empty-cells"
