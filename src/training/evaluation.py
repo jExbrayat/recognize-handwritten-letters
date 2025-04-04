@@ -1,5 +1,6 @@
 from time import time
 
+import numpy as np
 from matplotlib import pyplot as plt
 from sklearn.metrics import (
     ConfusionMatrixDisplay,
@@ -7,11 +8,18 @@ from sklearn.metrics import (
     confusion_matrix,
     f1_score,
 )
+from sklearn.pipeline import Pipeline
 
 from src.utils.constants import letters
 
 
-def evaluate_model(model, x_train, y_train, x_test, y_test) -> None:
+def evaluate_model(
+    model: Pipeline,
+    x_train: np.ndarray,
+    y_train: np.ndarray,
+    x_test: np.ndarray,
+    y_test: np.ndarray,
+) -> None:
     """Affiche l'accuracy et la matrice de confusion du modèle."""
     debut = time()
 
