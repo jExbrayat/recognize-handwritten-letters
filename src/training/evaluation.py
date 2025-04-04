@@ -12,7 +12,7 @@ from sklearn.metrics import (
 )
 from sklearn.pipeline import Pipeline
 
-from src.utils.constants import letters
+from src.utils.constants import letters_list
 
 
 def evaluate_model(
@@ -37,7 +37,7 @@ def evaluate_model(
     score = f1_score(y_test, y_pred, average=None)
     print(f"f1_score = {score}")
     cm = confusion_matrix(y_true=y_test, y_pred=y_pred)
-    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=letters)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=letters_list)
 
     fig, ax = plt.subplots(figsize=(14, 10))
     disp.plot(ax=ax)
