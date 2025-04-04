@@ -35,7 +35,6 @@ select = [
     "B",
     "SIM",
     "I",
-    "D",
     "RUF",
     "FURB",
     "W",
@@ -53,7 +52,13 @@ select = [
     "Q",
     "PT",
     "PYI",
-    "ANN"
+    "ANN",
+    "DOC",
+    "D",
+    "D212",
+    "D402",
+    "D415",
+    "D417",
 ]
 
 [tool.ruff.lint.pydocstyle]
