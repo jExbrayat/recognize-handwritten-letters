@@ -1,7 +1,7 @@
 data_folder = "data"
 img_shape = 28, 28
 nb_classes = 26
-letters = [
+letters = (
     "a",
     "b",
     "c",
@@ -28,4 +28,4 @@ letters = [
     "x",
     "y",
     "z",
-]
+)
