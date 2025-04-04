@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 project = "recognize-handwritten-letters"
-copyright = "2023, Exbrayat Madani"
+copyright = "2023-2025, Exbrayat Madani"
 author = "Exbrayat Madani"
 
 # -- General configuration ---------------------------------------------------
