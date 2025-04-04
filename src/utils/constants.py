@@ -1,7 +1,11 @@
-data_folder = "data"
-img_shape = 28, 28
-nb_classes = 26
-letters = [
+"""Constants used throughout the project."""
+
+from typing import Final
+
+data_folder: Final[str] = "data"
+img_shape: Final[tuple[int, int]] = 28, 28
+nb_classes: Final[int] = 26
+letters_list: Final[tuple[str, ...]] = (
     "a",
     "b",
     "c",
@@ -28,4 +32,4 @@ letters = [
     "x",
     "y",
     "z",
-]
+)

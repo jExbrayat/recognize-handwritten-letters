@@ -1,4 +1,4 @@
-# Configuration file for the Sphinx documentation builder.
+"""Configuration file for the Sphinx documentation builder."""
 #
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 project = "recognize-handwritten-letters"
-copyright = "2023, Exbrayat Madani"
+copyright = "2023-2025, Exbrayat Madani"
 author = "Exbrayat Madani"
 
 # -- General configuration ---------------------------------------------------
@@ -21,7 +21,6 @@ filepath = Path(__file__).resolve()
 root_folder = str(filepath.parent.parent.parent)
 sys.path.append(root_folder)
 sys.path.append(f"{root_folder}/src")
-sys.path.append(f"{root_folder}/src/functions")
 
 
 extensions = ["sphinx.ext.autodoc", "sphinx.ext.viewcode", "sphinx.ext.napoleon"]
