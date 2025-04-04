@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import numpy as np
 from onnxconverter_common import FloatTensorType
 from skl2onnx import convert_sklearn
@@ -11,5 +13,5 @@ def save_model(model: Pipeline, x: np.ndarray, model_name: str) -> None:
         model, initial_types=[("float_input", FloatTensorType([None, x.shape[1]]))]
     )
 
-    with open(f"{data_folder}/models/{model_name}.onnx", "wb") as f:
+    with Path(f"{data_folder}/models/{model_name}.onnx").open("wb") as f:
         f.write(onnx_model.SerializeToString())

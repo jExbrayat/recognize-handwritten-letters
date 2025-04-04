@@ -16,9 +16,9 @@ def sample_dataset(
     original_dataset = np.loadtxt(original_dataset_path, delimiter=",")
 
     # Create an array of random unique indexes
-    random_choice = np.random.choice(
-        original_dataset.shape[0], sample_size, replace=False
-    )
+    rng = np.random.default_rng(0)
+
+    random_choice = rng.choice(original_dataset.shape[0], sample_size, replace=False)
 
     # Take a sample of dataset
     sample_dataset = original_dataset[random_choice]
