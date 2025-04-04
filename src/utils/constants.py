@@ -1,4 +1,5 @@
 """Constants used throughout the project."""
+
 from typing import Final
 
 data_folder: Final[str] = "data"
