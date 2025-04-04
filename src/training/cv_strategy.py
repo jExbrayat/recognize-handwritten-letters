@@ -1,3 +1,5 @@
+"""Cross-validation strategy."""
+
 from sklearn.model_selection import StratifiedKFold
 
 
