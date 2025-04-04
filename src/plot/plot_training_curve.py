@@ -1,3 +1,5 @@
+"""Plot training curves."""
+
 import matplotlib.pyplot as plt
 import numpy as np
 
