@@ -40,7 +40,33 @@ const Grid = ({ size, cellSize }) => {
   const [mode, setMode] = useState("write"); // Modes: "write" or "erase"
   const [penSize, setPenSize] = useState(3); // Size of the pen
   const [shade, setShade] = useState(100); // Shade intensity from 0 (black) to 255 (white)
-  const [digit, setDigit] = useState(0); 
+  const [digit, setDigit] = useState(0);
+  const letters = [    "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "j",
+      "k",
+      "l",
+      "m",
+      "n",
+      "o",
+      "p",
+      "q",
+      "r",
+      "s",
+      "t",
+      "u",
+      "v",
+      "w",
+      "x",
+      "y",
+      "z"];
 
   const toggleCell = (index) => {
     setCells((prev) => {
@@ -176,7 +202,7 @@ const Grid = ({ size, cellSize }) => {
         ))}
       </div>
     </div>
-    <p>Le chiffre reconnu est un {digit}.</p>
+    <p>La lettre reconnue est un {letters[digit]}.</p>
     </div>
   );
 };
