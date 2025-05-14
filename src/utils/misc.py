@@ -14,7 +14,6 @@ def get_project_root() -> Path:
     Returns
     -------
     The project root.
-
     """
     current_file = Path(__file__).resolve()
     project_root = current_file.parent.parent.parent
