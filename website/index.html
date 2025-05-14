@@ -205,7 +205,7 @@ async function runInference(modelPath, inputData) {
         const feeds = { float_input: inputTensor };
 
         // const results = await session.run(feeds);
-        const results = await session.run(feeds, ["output_label"]);
+        const results = await session.run(feeds);
         
         // Récupérer les sorties (nom de la sortie peut varier selon le modèle)
         const outputName = session.outputNames[0];
