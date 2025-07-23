@@ -3,11 +3,12 @@
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
+from matplotlib.figure import Figure
 
 from src.utils.constants import img_shape
 
 
-def plot_one_letter(df: pd.DataFrame | np.ndarray, index: int) -> None:
+def plot_one_letter(df: pd.DataFrame | np.ndarray, index: int) -> Figure:
     """Display a single letter image from a dataset.
 
     Parameters
@@ -18,7 +19,7 @@ def plot_one_letter(df: pd.DataFrame | np.ndarray, index: int) -> None:
     index : int
         Index of the image to display.
     """
-    plt.figure(figsize=(1, 1))
+    fig = plt.figure(figsize=(1, 1))
     plt.axis("off")
 
     img: np.ndarray
@@ -28,7 +29,7 @@ def plot_one_letter(df: pd.DataFrame | np.ndarray, index: int) -> None:
         img = df[index].reshape(img_shape)
 
     plt.imshow(img, cmap=plt.cm.binary)
-    plt.show()
+    return fig
 
 
 def plot_grid_of_letters(
@@ -37,7 +38,7 @@ def plot_grid_of_letters(
     nb_cols: int = 5,
     figsize: tuple[int, int] = (6, 6),
     title: str | None = None,
-) -> None:
+) -> Figure:
     """Display a grid of letter images from a dataset.
 
     Parameters
@@ -69,4 +70,4 @@ def plot_grid_of_letters(
     if title:
         fig.suptitle(title, fontsize=16)
 
-    plt.show()
+    return fig

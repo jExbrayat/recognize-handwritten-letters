@@ -2,6 +2,7 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.figure import Figure
 
 
 def plot_training_curve(
@@ -10,7 +11,7 @@ def plot_training_curve(
     plot_from_n_epoch: int,
     validation_accuracy: list | None = None,
     save_path: str | None = None,
-) -> None:
+) -> Figure:
     """Plot training curves of a keras model.
 
     (train loss, val loss, val accuracy if classification model)
@@ -29,6 +30,7 @@ def plot_training_curve(
         save_path (str): path to save plot in .png format
 
     """
+    fig = plt.figure()
     num_epochs_to_display = len(training_loss) - plot_from_n_epoch
     step_x_ticks = max(int(num_epochs_to_display / 10), 1)
 
@@ -53,4 +55,4 @@ def plot_training_curve(
     if save_path is not None:
         plt.savefig(save_path)
 
-    plt.show()
+    return fig
