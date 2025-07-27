@@ -18,6 +18,10 @@ def plot_one_letter(df: pd.DataFrame | np.ndarray, index: int) -> Figure:
         Each row should represent one image.
     index : int
         Index of the image to display.
+
+    >>> from src.data.load_data import load_sample_x_y
+    >>> x, y = load_sample_x_y()
+    >>> _ = plot_one_letter(x, 0)
     """
     fig = plt.figure(figsize=(1, 1))
     plt.axis("off")
