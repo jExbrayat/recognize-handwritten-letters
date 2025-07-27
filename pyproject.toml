@@ -83,6 +83,11 @@ select = [
 convention = "numpy"
 
 [tool.poe]
+    [tool.poe.tasks.test]
+    help = "Test the codebase"
+    sequence = [
+        {cmd = "uv run pytest --doctest-modules"},
+    ]
     [tool.poe.tasks.format]
     help = "Format the files"
     sequence = [
