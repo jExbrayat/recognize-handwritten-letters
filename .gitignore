@@ -169,3 +169,6 @@ data/raw/test-dataset.csv
 
 # ML Flow
 mlruns/
+
+# Temp folders
+tests/temp/
