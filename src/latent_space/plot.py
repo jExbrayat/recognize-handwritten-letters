@@ -2,7 +2,11 @@ import numpy as np
 import torch
 from matplotlib import pyplot as plt
 
-from src.latent_space.models.variational_auto_encoder import device
+from src.latent_space.models.variational_auto_encoder import (
+    Autoencoder,
+    VariationalAutoencoder,
+    device,
+)
 
 
 def plot_latent(autoencoder, data, num_batches=100):
@@ -19,7 +23,7 @@ def plot_reconstructed(
     autoencoder,
     r0: tuple[float, float] = (-5, 10),
     r1: tuple[float, float] = (-10, 5),
-    n=12,
+    n: int = 12,
 ):
     w = 28
     img = np.zeros((n * w, n * w))
@@ -32,11 +36,13 @@ def plot_reconstructed(
     plt.imshow(img, extent=(*r0, *r1))
 
 
-def interpolate(autoencoder, x_1, x_2, n=12):
-    z_1 = autoencoder.encoder(x_1)
-    z_2 = autoencoder.encoder(x_2)
+def interpolate(
+    autoencoder: Autoencoder | VariationalAutoencoder, x_1, x_2, n: int = 12
+):
+    z_1 = autoencoder.encoder.forward(x_1)
+    z_2 = autoencoder.encoder.forward(x_2)
     z = torch.stack([z_1 + (z_2 - z_1) * t for t in np.linspace(0, 1, n)])
-    interpolate_list = autoencoder.decoder(z)
+    interpolate_list = autoencoder.decoder.forward(z)
     interpolate_list = interpolate_list.to("cpu").detach().numpy()
 
     w = 28
