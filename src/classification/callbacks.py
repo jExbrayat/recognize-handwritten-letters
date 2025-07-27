@@ -1,5 +1,8 @@
 """Callbacks."""
 
+import os
+
+os.environ["KERAS_BACKEND"] = "torch"
 from keras.src.callbacks import EarlyStopping, History
 
 
