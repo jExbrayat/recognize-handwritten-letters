@@ -3,6 +3,8 @@
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
+import torch
+from torch.utils.data import TensorDataset, DataLoader
 
 from src.utils.constants import data_folder
 
@@ -59,3 +61,25 @@ def load_sample_train_test(
     y_test = np.array(y_test)
 
     return x_train, x_test, y_train, y_test
+
+
+def convert_to_torch_dataset(
+    x: np.ndarray,
+    y: np.ndarray,
+    batch_size: int = 128,
+) -> DataLoader:
+    """Turn x and y into torch dataset.
+
+    >>> x, y = load_sample_x_y()
+    >>> data = convert_to_torch_dataset(x, y)
+    """
+    x_tensor = torch.from_numpy(x).float()
+    y_tensor = torch.from_numpy(y).float()
+
+    x_tensor = x_tensor.view(-1, 1, 28, 28)
+
+    dataset = TensorDataset(x_tensor, y_tensor)
+
+    data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+
+    return data_loader
