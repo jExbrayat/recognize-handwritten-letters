@@ -3,25 +3,21 @@ import os
 os.environ["KERAS_BACKEND"] = "torch"
 
 import numpy as np
-
-from keras.src.losses import MeanSquaredError
-from keras.src.optimizers import Adam
-
 from keras import Model
-
 from keras.src.layers import (
+    Conv2D,
+    Conv2DTranspose,
     Dense,
+    Flatten,
     Input,
     MaxPooling2D,
-    Conv2DTranspose,
-    Conv2D,
     Reshape,
-    Flatten,
 )
-
+from keras.src.losses import MeanSquaredError
+from keras.src.optimizers import Adam
 from matplotlib import pyplot as plt
 
-from src.classification.training.callbacks import history, early_stopping
+from src.classification.training.callbacks import early_stopping, history
 
 
 def build_encoder(latent_dimension: int = 26) -> Model:

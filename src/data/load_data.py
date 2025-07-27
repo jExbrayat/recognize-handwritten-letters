@@ -2,9 +2,9 @@
 
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
 import torch
-from torch.utils.data import TensorDataset, DataLoader
+from sklearn.model_selection import train_test_split
+from torch.utils.data import DataLoader, TensorDataset
 
 from src.utils.constants import data_folder
 
