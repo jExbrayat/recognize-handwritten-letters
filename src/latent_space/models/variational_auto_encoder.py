@@ -1,11 +1,10 @@
 import torch
-
-torch.manual_seed(0)
 import torch.distributions
 import torch.nn as nn
-import torch.nn.functional as F
+import torch.nn.functional as f
 import torch.utils
 
+torch.manual_seed(0)
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
@@ -17,7 +16,7 @@ class Encoder(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = torch.flatten(x, start_dim=1)
-        x = F.relu(self.linear1(x))
+        x = f.relu(self.linear1(x))
         return self.linear2(x)
 
 
@@ -35,7 +34,7 @@ class VariationalEncoder(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = torch.flatten(x, start_dim=1)
-        x = F.relu(self.linear1(x))
+        x = f.relu(self.linear1(x))
         mu = self.linear2(x)
         sigma = torch.exp(self.linear3(x))
         z = mu + sigma * self.N.sample(mu.shape)
@@ -50,7 +49,7 @@ class Decoder(nn.Module):
         self.linear2 = nn.Linear(512, 784)
 
     def forward(self, z: torch.Tensor) -> torch.Tensor:
-        z = F.relu(self.linear1(z))
+        z = f.relu(self.linear1(z))
         z = torch.sigmoid(self.linear2(z))
         return z.reshape((-1, 1, 28, 28))
 
@@ -79,8 +78,8 @@ class VariationalAutoencoder(nn.Module):
 
 def train(autoencoder, data, epochs=20):
     opt = torch.optim.Adam(autoencoder.parameters())
-    for epoch in range(epochs):
-        for x, y in data:
+    for _ in range(epochs):
+        for x, _ in data:
             x = x.to(device)  # GPU
             opt.zero_grad()
             x_hat = autoencoder(x)
@@ -92,8 +91,8 @@ def train(autoencoder, data, epochs=20):
 
 def train_vae(autoencoder, data, epochs=20):
     opt = torch.optim.Adam(autoencoder.parameters())
-    for epoch in range(epochs):
-        for x, y in data:
+    for _ in range(epochs):
+        for x, _ in data:
             x = x.to(device)  # GPU
             opt.zero_grad()
             x_hat = autoencoder(x)
