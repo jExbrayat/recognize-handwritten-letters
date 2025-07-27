@@ -1,28 +1,28 @@
 import torch
 
 torch.manual_seed(0)
+import torch.distributions
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils
-import torch.distributions
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
 class Encoder(nn.Module):
-    def __init__(self, latent_dims):
+    def __init__(self, latent_dims: int) -> None:
         super().__init__()
         self.linear1 = nn.Linear(784, 512)
         self.linear2 = nn.Linear(512, latent_dims)
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = torch.flatten(x, start_dim=1)
         x = F.relu(self.linear1(x))
         return self.linear2(x)
 
 
 class VariationalEncoder(nn.Module):
-    def __init__(self, latent_dims):
+    def __init__(self, latent_dims: int):
         super().__init__()
         self.linear1 = nn.Linear(784, 512)
         self.linear2 = nn.Linear(512, latent_dims)
@@ -33,7 +33,7 @@ class VariationalEncoder(nn.Module):
         # self.N.scale = self.N.scale.cuda()
         self.kl = 0
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = torch.flatten(x, start_dim=1)
         x = F.relu(self.linear1(x))
         mu = self.linear2(x)
@@ -44,35 +44,35 @@ class VariationalEncoder(nn.Module):
 
 
 class Decoder(nn.Module):
-    def __init__(self, latent_dims):
+    def __init__(self, latent_dims: int):
         super().__init__()
         self.linear1 = nn.Linear(latent_dims, 512)
         self.linear2 = nn.Linear(512, 784)
 
-    def forward(self, z):
+    def forward(self, z: torch.Tensor) -> torch.Tensor:
         z = F.relu(self.linear1(z))
         z = torch.sigmoid(self.linear2(z))
         return z.reshape((-1, 1, 28, 28))
 
 
 class Autoencoder(nn.Module):
-    def __init__(self, latent_dims):
+    def __init__(self, latent_dims: int):
         super().__init__()
         self.encoder = Encoder(latent_dims)
         self.decoder = Decoder(latent_dims)
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         z = self.encoder(x)
         return self.decoder(z)
 
 
 class VariationalAutoencoder(nn.Module):
-    def __init__(self, latent_dims):
+    def __init__(self, latent_dims: int):
         super().__init__()
         self.encoder = VariationalEncoder(latent_dims)
         self.decoder = Decoder(latent_dims)
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         z = self.encoder(x)
         return self.decoder(z)
 
