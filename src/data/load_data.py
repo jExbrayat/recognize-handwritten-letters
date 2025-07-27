@@ -9,6 +9,28 @@ from torch.utils.data import DataLoader, TensorDataset
 from src.utils.constants import data_folder
 
 
+def load_data(path: str) -> pd.DataFrame:
+    """Load data
+
+    Examples
+    --------
+    >>> sample_data = load_data(f"{data_folder}/raw/sample-uniform-distribution.parquet")
+    """
+    data = pd.read_parquet(path, engine="pyarrow")
+    return data
+
+
+def load_full_data() -> pd.DataFrame:
+    """Load full data.
+
+    Examples
+    --------
+    >>> data = load_full_data()
+    """
+    data = load_data(f"{data_folder}/raw/original-data.parquet")
+    return data
+
+
 def load_sample_data() -> pd.DataFrame:
     """Load sample data.
 
@@ -16,9 +38,7 @@ def load_sample_data() -> pd.DataFrame:
     --------
     >>> sample_data = load_sample_data()
     """
-    sample_data = pd.read_parquet(
-        f"{data_folder}/raw/sample-uniform-distribution.parquet", engine="pyarrow"
-    )
+    sample_data = load_data(f"{data_folder}/raw/sample-uniform-distribution.parquet")
     return sample_data
 
 
@@ -62,11 +82,6 @@ def load_sample_train_test(
     x_train, x_test, y_train, y_test = train_test_split(
         x, y, stratify=y, random_state=random_state, test_size=test_size
     )
-
-    x_train = np.array(x_train)
-    y_train = np.array(y_train)
-    x_test = np.array(x_test)
-    y_test = np.array(y_test)
 
     return x_train, x_test, y_train, y_test
 
