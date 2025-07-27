@@ -19,9 +19,11 @@ def plot_one_letter(df: pd.DataFrame | np.ndarray, index: int) -> Figure:
     index : int
         Index of the image to display.
 
+    Examples
+    --------
     >>> from src.data.load_data import load_sample_x_y
     >>> x, y = load_sample_x_y()
-    >>> _ = plot_one_letter(x, 0)
+    >>> plot = plot_one_letter(x, 0)
     """
     fig = plt.figure(figsize=(1, 1))
     plt.axis("off")
@@ -58,6 +60,13 @@ def plot_grid_of_letters(
         Size of the figure in inches (width, height). Default is (6, 6).
     title : str or None, optional
         Optional title to display above the grid. Default is None.
+
+    Examples
+    --------
+    >>> from src.data.load_data import load_sample_x_y
+    >>> x, y = load_sample_x_y()
+    >>> plot_title = "First letters in the dataset"
+    >>> plot = plot_grid_of_letters(x, title=plot_title)
     """
     fig, axs = plt.subplots(nrows=nb_rows, ncols=nb_cols, figsize=figsize)
 
