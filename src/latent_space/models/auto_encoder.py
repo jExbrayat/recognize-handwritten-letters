@@ -21,7 +21,7 @@ from keras.src.layers import (
 
 from matplotlib import pyplot as plt
 
-from src.models.callbacks import history, early_stopping
+from src.classification.callbacks import history, early_stopping
 
 
 def build_encoder(latent_dimension: int = 26) -> Model:
