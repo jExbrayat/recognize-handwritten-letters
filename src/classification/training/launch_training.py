@@ -75,5 +75,25 @@ def main(use_sample_data: bool = True) -> None:
         run_experiment(model, use_preprocess=False, use_sample_data=use_sample_data)
 
 
+def main2(use_sample_data: bool = True) -> None:
+    from joblib import Parallel, delayed
+    from itertools import product
+
+    models = get_models()
+    preprocess_options = [True, False]
+
+    # Crée toutes les combinaisons possibles
+    tasks = product(models, preprocess_options)
+
+    # Lance les expériences en parallèle
+    Parallel(n_jobs=2)(  # n_jobs=-1 utilise tous les cœurs dispo
+        delayed(run_experiment)(
+            model, use_preprocess=pre, use_sample_data=use_sample_data
+        )
+        for model, pre in tasks
+    )
+
+
 if __name__ == "__main__":
-    typer.run(main)
+    # typer.run(main)
+    main2(False)
