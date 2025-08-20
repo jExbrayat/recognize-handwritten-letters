@@ -1,5 +1,7 @@
+from itertools import product
+
 import mlflow
-import typer
+from joblib import Parallel, delayed
 from mlflow.data.numpy_dataset import from_numpy
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
@@ -10,9 +12,6 @@ from sklearn.tree import DecisionTreeClassifier
 from src.classification.training.evaluation import evaluate_model
 from src.data.load_data import get_x_y, load_full_data, load_sample_train_test
 from src.data.preprocessing import preprocess
-
-from joblib import Parallel, delayed
-from itertools import product
 
 
 def get_models() -> tuple[Pipeline, ...]:
@@ -76,9 +75,6 @@ def main(use_sample_data: bool = True) -> None:
 
 
 def main2(use_sample_data: bool = True) -> None:
-    from joblib import Parallel, delayed
-    from itertools import product
-
     models = get_models()
     preprocess_options = [True, False]
 
