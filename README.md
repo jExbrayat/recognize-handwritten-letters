@@ -11,7 +11,7 @@ The goal of this project is to recognize handwritten letters.
 We are working on a [MNIST-like dataset for letters](https://www.kaggle.com/datasets/ashishguptajiit/handwritten-az/data).
 
 <p align="middle">
-  <img src="assets/img/dataset-first-letters.png" />
+  <img src="assets/img/pipeline-diagram.svg" />
 </p>
 
 Above are shown the 25 first letters of the dataset.
