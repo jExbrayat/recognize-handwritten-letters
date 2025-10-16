@@ -4,7 +4,7 @@
 
 The goal of this project is to recognize handwritten letters.
 
-![UMAP embedding of the letters](assets/img/umap-embedding-plot.png)
+![pipeline diagram](assets/img/pipeline-diagram.svg)
 
 ## Dataset
 
