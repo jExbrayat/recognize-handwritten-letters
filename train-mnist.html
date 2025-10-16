@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grille Dessin React</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+    <div id="root"></div>
+
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tensorflow/4.22.0/tf.min.js"></script>    
+    <script src=" https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.5.1/dist/tfjs-vis.umd.min.js "></script>
+
+    <script type="text/babel">
+class MnistData {
+    constructor() {
+        this.DATA_URL = 'https://storage.googleapis.com/learnjs-data/model-builder/mnist_images.png';
+        this.LABELS_URL = 'https://storage.googleapis.com/learnjs-data/model-builder/mnist_labels_uint8';
+        this.numExamples = 65000;
+        this.numClasses = 10;
+        this.imageSize = 28 * 28;
+        this.IMAGE_WIDTH = 28;
+        this.IMAGE_HEIGHT = 28;
+    }
+
+    async load() {
+        const imgResponse = await fetch(this.DATA_URL);
+        const imgBuffer = await imgResponse.arrayBuffer();
+        const imgArray = new Uint8Array(imgBuffer);
+        this.images = new Float32Array(this.numExamples * this.imageSize);
+        
+        for (let i = 0; i < this.numExamples * this.imageSize; i++) {
+            this.images[i] = imgArray[i] / 255;
+        }
+
+        const labelsResponse = await fetch(this.LABELS_URL);
+        this.labels = new Uint8Array(await labelsResponse.arrayBuffer());
+    }
+
+    getTrainData() {
+        const trainSize = Math.floor(this.numExamples * 0.8);
+        return this.getData(0, trainSize);
+    }
+
+    getData(startIndex, endIndex) {
+        const size = endIndex - startIndex;
+        const images = tf.tensor4d(
+            this.images.slice(startIndex * this.imageSize, endIndex * this.imageSize),
+            [size, this.IMAGE_WIDTH, this.IMAGE_HEIGHT, 1]
+        );
+        const labels = tf.oneHot(tf.tensor1d(this.labels.slice(startIndex, endIndex), 'int32'), this.numClasses);
+        return { xs: images, labels: labels };
+    }
+}
+
+async function trainAndSaveModel() {
+    // Charger les données
+    const data = new MnistData();
+    await data.load();
+
+    // Définition du modèle
+    const model = tf.sequential();
+    model.add(tf.layers.conv2d({
+        inputShape: [28, 28, 1],
+        filters: 32,
+        kernelSize: 3,
+        activation: 'relu'
+    }));
+    model.add(tf.layers.maxPooling2d({ poolSize: [2, 2] }));
+    model.add(tf.layers.conv2d({ filters: 64, kernelSize: 3, activation: 'relu' }));
+    model.add(tf.layers.maxPooling2d({ poolSize: [2, 2] }));
+    model.add(tf.layers.flatten());
+    model.add(tf.layers.dense({ units: 128, activation: 'relu' }));
+    model.add(tf.layers.dense({ units: 10, activation: 'softmax' }));
+
+    // Compilation du modèle
+    model.compile({
+        optimizer: 'adam',
+        loss: 'categoricalCrossentropy',
+        metrics: ['accuracy']
+    });
+
+    // Entraînement du modèle
+    const trainData = data.getTrainData();
+    await model.fit(trainData.xs, trainData.labels, {
+        epochs: 10,
+        batchSize: 128,
+        validationSplit: 0.1,
+        callbacks: tfvis.show.fitCallbacks(
+            { name: 'Training Performance' },
+            ['loss', 'acc'],
+            { height: 200, callbacks: ['onEpochEnd'] }
+        )
+    });
+
+    // Sauvegarde du modèle
+    await model.save('downloads://mnist_model');
+    console.log('Modèle sauvegardé en JSON et poids binaires.');
+}
+
+trainAndSaveModel();
+
+
+      
+</script>
+</body>
+</html>
