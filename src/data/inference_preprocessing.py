@@ -24,8 +24,10 @@ def turn_to_mnist(img: Image.Image) -> Image.Image:
     img_resized = img_cropped.resize((28, 28), Image.Resampling.LANCZOS)
     img_padded = pad_image(img_resized)
     img_resized = img_padded.resize((28, 28), Image.Resampling.LANCZOS)
+    img_dilated = dilatate(img_resized)
+    img_more_contrasted = intensify_contrast(img_dilated)
 
-    return img_resized
+    return img_more_contrasted
 
 
 def dilatate(img: Image.Image) -> Image.Image:
@@ -37,9 +39,7 @@ def dilatate(img: Image.Image) -> Image.Image:
 
 
 def intensify_contrast(img: Image.Image) -> Image.Image:
-
-    """
-    Enhance the contrast of an image by stretching its intensity range.
+    """Enhance the contrast of an image by stretching its intensity range.
 
     This function uses Pillow's ``ImageOps.autocontrast`` with a cutoff of 5%.
     It removes the darkest 5% and brightest 5% of pixel values and rescales the
