@@ -15,6 +15,12 @@ def preprocess(x: np.ndarray) -> np.ndarray:
     -------
     np.ndarray
         Preprocessed array of images.
+
+    Examples
+    --------
+    >>> from src.data.load_data import load_sample_x_y
+    >>> x, y = load_sample_x_y()
+    >>> x_processed = preprocess(x)
     """
     x = x.astype(np.float32)
     return x / 255.0

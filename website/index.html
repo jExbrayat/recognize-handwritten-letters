@@ -246,7 +246,7 @@ async function runInference(modelPath, inputData) {
 
 // Exemple d'utilisation
 const testInput = [[0.5, 0.2, 0.1, ...Array(784 - 3).fill(0)]]; // Une image normalisée de 28x28 aplatie
-const model_url = 'https://raw.githubusercontent.com/jExbrayat/recognize-handwritten-letters/main/data/models/svc.onnx';
+const model_url = 'https://raw.githubusercontent.com/jExbrayat/recognize-handwritten-letters/main/data/models/random-forest.onnx';
 runInference(model_url, testInput);
 
 </script>

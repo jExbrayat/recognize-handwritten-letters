@@ -3,8 +3,12 @@
 from typing import Final
 
 data_folder: Final[str] = "data"
-img_shape: Final[tuple[int, int]] = 28, 28
 nb_classes: Final[int] = 26
+
+img_shape: Final[tuple[int, int]] = 28, 28
+img_dimension: Final[int] = 784
+img_shape_flat: Final[tuple[int]] = (img_dimension,)
+
 letters_list: Final[tuple[str, ...]] = (
     "a",
     "b",

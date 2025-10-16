@@ -1,52 +1,17 @@
-[tool.poetry]
-name = "recognize-handwritten-letters"
-version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
-readme = "README.md"
-
 [tool.poetry.dependencies]
-keras = "^2.12.0"
 tensorflow = "^2.12.0"
 tensorflow-io-gcs-filesystem = "^0.31.0"
 umap-learn = "^0.5.5"
 
 [tool.poetry.group.dev.dependencies]
-poethepoet = "^0.24.4"
-
 papermill = "^2.5.0"
 nbqa = "^1.7.1"
-nb-clean = "^3.2.0"
-nbdev = "^2.3.13"
-
-flake8-annotations = "^3.0.1"
 
 sphinx = "^7.2.6"
 sphinx-rtd-theme = "^2.0.0"
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.isort]
-profile = "black"
 
 [tool.poe]
-  [tool.poe.tasks.format]
-  help = "Format the files"
-  sequence = [
-    { cmd = "black ." },
-    { cmd = "isort ." },
-    { cmd = "nbqa isort . --float-to-top" },
-  ]
-
-  [tool.poe.tasks.lint]
-  help = "Lint the files"
-  sequence = [
-    { cmd = "flake8 ." },
-    { cmd = "nbqa flake8 ." },
-  ]
-
   [tool.poe.tasks.nbcheck]
   help = "Check notebooks for metadata"
   cmd = "nb-clean check . --preserve-cell-outputs --remove-empty-cells"

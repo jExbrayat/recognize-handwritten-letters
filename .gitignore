@@ -166,3 +166,9 @@ data/raw/test-dataset.csv
 
 # Settings folder for VS Code users
 .vscode/
+
+# ML Flow
+mlruns/
+
+# Temp folders
+tests/temp/
