@@ -4,14 +4,14 @@
 
 The goal of this project is to recognize handwritten letters.
 
-![UMAP embedding of the letters](assets/img/umap-embedding-plot.png)
+![pipeline diagram](assets/img/pipeline-diagram.svg)
 
 ## Dataset
 
 We are working on a [MNIST-like dataset for letters](https://www.kaggle.com/datasets/ashishguptajiit/handwritten-az/data).
 
 <p align="middle">
-  <img src="assets/img/pipeline-diagram.svg" />
+  <img src="assets/img/dataset-first-letters.png" />
 </p>
 
 Above are shown the 25 first letters of the dataset.
