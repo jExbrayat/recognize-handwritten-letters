@@ -10,7 +10,6 @@ def plot_training_curve(
     validation_loss: list,
     plot_from_n_epoch: int,
     validation_accuracy: list | None = None,
-    save_path: str | None = None,
 ) -> Figure:
     """Plot training curves of a Keras model.
 
@@ -27,12 +26,10 @@ def plot_training_curve(
         from history callback
 
         plot_from_n_epoch (int): epoch from which to plot when there are too many
-        save_path (str): path to save plot in .png format
-
     """
     fig = plt.figure()
     num_epochs_to_display = len(training_loss) - plot_from_n_epoch
-    step_x_ticks = max(int(num_epochs_to_display / 10), 1)
+    step_x_ticks = max(num_epochs_to_display // 10, 1)
 
     plt.plot(training_loss[plot_from_n_epoch:], label="training loss")
     plt.plot(validation_loss[plot_from_n_epoch:], label="validation loss")
@@ -51,8 +48,5 @@ def plot_training_curve(
             step=step_x_ticks,
         ),
     )
-
-    if save_path is not None:
-        plt.savefig(save_path)
 
     return fig
