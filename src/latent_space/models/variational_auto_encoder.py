@@ -76,7 +76,7 @@ class VariationalAutoencoder(nn.Module):
         return self.decoder(z)
 
 
-def train(autoencoder, data, epochs: int=20):
+def train(autoencoder, data, epochs: int = 20):
     opt = torch.optim.Adam(autoencoder.parameters())
     for _ in range(epochs):
         for x, _ in data:
@@ -89,7 +89,7 @@ def train(autoencoder, data, epochs: int=20):
     return autoencoder
 
 
-def train_vae(autoencoder, data, epochs: int=20):
+def train_vae(autoencoder, data, epochs: int = 20):
     opt = torch.optim.Adam(autoencoder.parameters())
     for _ in range(epochs):
         for x, _ in data:

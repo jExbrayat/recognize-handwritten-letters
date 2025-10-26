@@ -9,7 +9,7 @@ from src.latent_space.models.variational_auto_encoder import (
 )
 
 
-def plot_latent(autoencoder, data, num_batches: int=100):
+def plot_latent(autoencoder, data, num_batches: int = 100):
     for i, (x, y) in enumerate(data):
         z = autoencoder.encoder(x.to(device))
         z = z.to("cpu").detach().numpy()
