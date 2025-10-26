@@ -12,7 +12,7 @@ def plot_training_curve(
     validation_accuracy: list | None = None,
     save_path: str | None = None,
 ) -> Figure:
-    """Plot training curves of a keras model.
+    """Plot training curves of a Keras model.
 
     (train loss, val loss, val accuracy if classification model)
 
